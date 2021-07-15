@@ -1,0 +1,124 @@
+
+<!-- brand: HoneyBlue 
+Miel Elvish de Turquie-->
+
+
+<!-- conteneur recherche de produit -->
+<div [ngClass]= '{"search": true,
+	"searchHeight": brand != undefined}'>
+	<div class="container-search"  >
+		<input type="search" class="form-control" placeholder="Entrer ici un code barre" aria-label="Search" [(ngModel)]="search" >
+		<button type="button" class="search-button btn btn-outline-light me-2" (click)="getInfo()">Rechercher</button>
+	</div>
+</div>
+
+
+
+<!-- titre produit (fond jaune)-->
+<div class="container-title" *ngIf="isLoaded" [ngStyle]= "{background: getColor() }">
+	<h4 >{{productName}}</h4>
+	<p><strong>Marque: {{brand}}</strong><br />
+		<em>Type de produits: {{categories[0]}}</em><br>
+		<em>Code barre: {{barCode}}</em>
+	</p>
+</div>
+
+<!--page principale produit -->
+<div class="main-container animate__fadeInUp" *ngIf="isLoaded">
+
+	<!-- présentation produits avec image-->
+	<div class="image-product">
+		<img src="{{imageProduct}}" class="img-thumbnail" alt="image du produit">
+	</div>
+
+	<!-- Ingredients -->
+	<div class="ingredients">
+		<ul>
+			<li>
+				<h3>Ingrédients:</h3>
+			</li>
+			<li>{{ingredients}}</li>
+		</ul>
+	</div>
+
+	<!-- allérgenes-->
+	<div class="allergenes">
+		<h5>Allérgènes</h5>
+		<ul>
+			<li>{{allergen}}</li>
+		</ul>
+	</div>
+
+	<!-- NOVA -->
+	<div class="nova">
+		<img class="img-nova mb-3" src="{{nova}}" alt="nova" />
+		<p>
+			<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNOVA"
+				aria-expanded="false" aria-controls="collapseExample">
+				Plus d'informations
+			</button>
+		</p>
+
+		<div class="collapse" id="collapseNOVA">
+			<div class="card card-body">
+				<img class="img-explications" src="assets/images/Nova-explications.jpeg" alt="explication-nova" />
+			</div>
+		</div>
+
+	</div>
+
+	<!-- info nutritionnelles -->
+	<div class="nutritionnals-info" >
+		<p *ngIf="nutriscoreGroup == undefined">Nutriscore non renseigné</p>
+		<img src="{{nutriscore}}" alt="Nutriscore" />
+		<p>
+			<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+				aria-expanded="false" aria-controls="collapseExample">
+				Plus d'informations
+			</button>
+		</p>
+		<div class="collapse" id="collapseExample">
+			<div class="card card-body">
+
+				<img class="nutri-tab" src="{{nutritionImage}}" />
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Huile de palme -->
+	<div class="other">
+		<div class="palm-oil"  *ngIf="palmOil == 0">
+			<h5>Sans huile de palme</h5>
+			<i class="far fa-check-circle fa-5x" ></i>
+		</div>
+		<div class="palm-oil"  *ngIf="palmOil != 0">
+			<h5>Contient de l'huile de palme</h5>
+			<i class="fas fa-exclamation-circle fa-5x" style="color: rgb(228 110 43)"></i>
+		</div>
+		<img class="img-ab" src="{{ecoscore}}" alt="ecoscore" />
+	</div>
+
+	<!-- préparation -->
+	<div class="preparation">
+		<h5>Localisation</h5>
+		<div class="preparation-bloc">
+			<ul>
+				<h6>Magasins distributeurs: </h6>
+				<li *ngFor="let store of stores">{{store}}</li>
+				
+			</ul>
+			<ul *ngIf="localOrigins === true">
+				<h6>Origine des ingrédients française</h6>
+				<li>À {{percentLocal}}%</li>
+				<img src="https://fr.wikipedia.org/wiki/Fichier:Flag_of_France.svg#/media/Fichier:Flag_of_France.svg" alt="">
+			</ul>
+			<ul *ngIf="bioLabel">
+				<h6>Labels bio</h6>
+				<li *ngFor="let label of bioLabel">{{label}}</li>
+			</ul> 
+		</div>
+	</div>
+</div>
+
+
